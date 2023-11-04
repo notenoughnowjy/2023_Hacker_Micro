@@ -1,2 +1,4 @@
-# 2023_Hacker_Micro
-Media Art
+# 2023_Hackathon_Micro
+## Media Art(?)
+
+- 해커톤 모든 멘토님들께 감사의 인사를 드립니다. // [2023.11.04] 14:56 in 다목적강당
