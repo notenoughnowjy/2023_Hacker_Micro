@@ -13,7 +13,7 @@ image_index_queue = queue.Queue()
 stop_threads = False
 
 def receive_data(ser):
-    global result, temp, stop_threads
+    global data_values, result, temp, stop_threads
     i = 10
 
     # 칼만 필터 초기화
@@ -25,7 +25,8 @@ def receive_data(ser):
     kf.H = np.array([[1.,0.]])  # measurement function
     kf.P *= 1000.  # covariance matrix
     kf.R = 5  # state uncertainty
-    kf.Q = Q_discrete_white_noise(2, dt=1., var=0.1)  # process uncertainty
+    kf.Q = np.array([[0.1, 0.],
+                     [0., 0.1]])  # process uncertainty
 
     while not stop_threads:
         data_str = ser.readline().decode().strip()
@@ -65,7 +66,7 @@ def load_and_display_image():
             i = image_index_queue.get()
             if i >= 0:
                 try:
-                    image = cv2.imread(fr'C:\Users\yhyi\PycharmProjects\pythonProject\Hack_only_video\frame{i}.jpg')
+                    image = cv2.imread(fr'Hack_only_video/frame{i}.jpg')
                     if image is None:
                         raise FileNotFoundError
                 except FileNotFoundError:
@@ -79,7 +80,7 @@ def load_and_display_image():
                 stop_threads = True
                 break
 
-port_number = 'COM15'
+port_number = '/dev/cu.usbmodem1101'
 Serial_baud = 115200
 ser = serial.Serial(port_number, Serial_baud)
 
